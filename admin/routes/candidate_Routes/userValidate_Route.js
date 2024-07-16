@@ -7,8 +7,6 @@ const router = express.Router();
 
 //Validating User
 router.post('/', rTa_Validate, async (req, res) => {
-    // console.log("DATA", req.valid, req.token, req.user, req.message);
-
     if(!req.valid) {
         TokenInfo.findOneAndDelete({token: req.token}).catch((err) => console.log('Cannot Delete Invalid Token. Error:', err))
         return res.status(401).send({
@@ -19,16 +17,12 @@ router.post('/', rTa_Validate, async (req, res) => {
     
     // Finding Token
     console.log(`Validating User ${req.user.username}`);
-    TokenInfo.findOne({token: req.token}).then((resp) => {
-        if(resp == null || resp == 'null' || resp == '') {
+    TokenInfo.findOne({uid: req.user.uid}).then((resp) => {
+        if(resp == null || resp == 'null' || resp === '' || resp.id != req.user.id || resp.username != req.user.username || resp.token != req.token) {
             console.log('Invalid Session');
-            return res.status(200).send({
-                valid: false,
-                message: 'Invalid Session, login again'
-            })
+            return res.status(200).send({valid: false, message: 'Invalid Session, login again' })
         } 
 
-        // console.log('User Verified', resp.body);
         const userData = {
             uid: req.user.uid,
             id: req.user.id,
@@ -40,18 +34,10 @@ router.post('/', rTa_Validate, async (req, res) => {
             log3: req.user.log_3,
         }
         console.log(`Valid User ${req.user.username}`);
-        return res.status(200).send({
-            valid: true,
-            message: 'User Verified, Valid Session',
-            user: userData
-        })
+        return res.status(200).send({ valid: true, message: 'User Verified, Valid Session', user: userData })
     }).catch((err) => {
         console.log('Database Connection Error', err);
-        return res.status(500).send({
-            valid: false,
-            message: 'Database Connection Error',
-            error: err
-        })
+        return res.status(500).send({ valid: false, message: 'Database Connection Error', error: err })
     })
 })
 

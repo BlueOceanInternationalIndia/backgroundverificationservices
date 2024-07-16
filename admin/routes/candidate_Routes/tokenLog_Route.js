@@ -8,16 +8,10 @@ router.delete('/', async (req, res) => {
     
     await TokenInfo.deleteMany({}).then((entry) => {
         console.log("Token Logs Cleared");
-        res.status(200).send({
-            message: 'Token Logs Cleared',
-            deletedCount: entry.deletedCount
-        });
+        res.status(200).send({ message: 'Token Logs Cleared', deletedCount: entry.deletedCount });
     }).catch((err) => {
         console.log("Unable To Clear Token Logs. Error: ", err);
-        res.status(500).send({
-            message: 'Request Failed',
-            error: err
-        });
+        res.status(500).send({ message: 'Request Failed', error: err });
     })
     
 })

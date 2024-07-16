@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 
 const rTa_Validate = (req, res, next) => {
-    // console.log('Validating Token');
     const token = req.body.token && req.body.token.split(' ')[1];
     
     //Validating Token Data
@@ -19,7 +18,6 @@ const rTa_Validate = (req, res, next) => {
             req.valid = false;
             req.message = 'Invalid Token'
         } else {
-            // console.log('TOKEN OBJ->', tokenObj);
             req.valid = true;
             req.token = token;
             req.user = tokenObj;

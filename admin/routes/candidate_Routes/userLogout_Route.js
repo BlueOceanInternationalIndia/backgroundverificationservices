@@ -15,23 +15,14 @@ router.post('/', rTa_Verify, async (req, res) => {
             console.log('Invalid Session');
             return 'Invalid Session, User Not Logged In'
         } else {
-            console.log('User Logged Out');            
+            // console.log('User Logged Out');            
             return 'User Logged Out'
         }
-        
     }).catch((err) => {
         console.log('Error Logging Out');
-        return res.status(500).send({
-            logout: false,
-            message: 'Error Logging Out',
-            error: err
-        })
+        return res.status(500).send({ logout: false, message: 'Error Logging Out', error: err })
     });
-
-    return res.status(200).send({
-        logout: true,
-        message: message,
-    })
+    return res.status(200).send({ logout: true, message: message, })
 });
 
 export default router

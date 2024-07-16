@@ -41,7 +41,7 @@ router.post('/', async (req, res) => {
         return res.status(500).send({ message: 'Failed To Create Candidate Logs, Try Again' });
     }
 
-    console.log(`New Log Created For ${entry.username}`);
+    // console.log(`New Log Created For ${entry.username}`);
     return res.status(201).send({ message: `New Log Entry Created`, data: entry });
 });
 
@@ -49,17 +49,15 @@ router.get('/:uid', async (req, res) => {
     const {uid} = req.params;
     const log = await Log.findOne({uid: uid}).catch((err) => {
         console.log('Data Server Connection Failed. Error:', err);
-        return res.status(500).send({ message: 'Server Connection Failed', error: err});
+        return res.status(500).json({ message: 'Server Connection Failed', error: err });
     });
 
     if(log == null || log == '') {
         console.log(`No Logs Found For User ${uid}`);
-        return res.status(400).send({ message: 'Invalid Request' });
+        return res.status(400).json({ message: 'Invalid Request' });
     }
-
     // console.log(`Log for User ${uid} sent`);
-    return res.status(200).send({ message: 'Log Sent', log: log }
-    );
+    return res.status(200).json({ message: 'Log Sent', log: log });
 });
 
 export default router

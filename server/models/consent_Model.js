@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
-const token_Schema = new Schema(
+const Consent_Schema = new Schema(
     {
         uid: {
             type: String,
@@ -17,10 +17,9 @@ const token_Schema = new Schema(
             required: true,
             unique: true
         },
-        token: {
-            type: String,
-            required: true,
-            unique: true
+        consent: {
+            type: Boolean,
+            required: true
         }
     },
     //For saving date and time of creation and last update
@@ -29,4 +28,4 @@ const token_Schema = new Schema(
     }
 );
 
-export const TokenInfo = mongoose.model('Candidate_TokenInfo', token_Schema);
+export const Consent = mongoose.model('Candidate_Consent', Consent_Schema);
