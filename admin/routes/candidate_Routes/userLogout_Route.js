@@ -1,10 +1,5 @@
-import 'dotenv/config';
 import express from 'express';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken'
-import { AccInfo } from '../../models/account_Model.js'
 import { TokenInfo } from '../../models/token_Model.js';
-import {rTa_Exp_Hrs, aTr_Exp_Min} from '../../config/config.js'
 import rTa_Verify from '../../middlewares/tokenVerification.js';
 
 const router = express.Router();
@@ -15,14 +10,23 @@ router.post('/', rTa_Verify, async (req, res) => {
             console.log('Invalid Session');
             return 'Invalid Session, User Not Logged In'
         } else {
-            // console.log('User Logged Out');            
+            console.log('User Logged Out');            
             return 'User Logged Out'
         }
+        
     }).catch((err) => {
         console.log('Error Logging Out');
-        return res.status(500).send({ logout: false, message: 'Error Logging Out', error: err })
+        return res.status(500).send({
+            logout: false,
+            message: 'Error Logging Out',
+            error: err
+        })
     });
-    return res.status(200).send({ logout: true, message: message, })
+
+    return res.status(200).send({
+        logout: true,
+        message: message,
+    })
 });
 
 export default router

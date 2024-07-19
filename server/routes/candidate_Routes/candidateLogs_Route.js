@@ -57,7 +57,6 @@ router.get('/:uid', async (req, res) => {
         return res.status(400).send({ message: 'Invalid Request' });
     }
 
-    // console.log(`Log for User ${uid} sent`);
     return res.status(200).send({ message: 'Log Sent', log: log }
     );
 });

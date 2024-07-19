@@ -31,7 +31,11 @@ router.post('/', async (req, res) => {
         return userAuth
     }).catch((err) => {
         console.log('Server Not Responding. Error:', err);
-        return res.status(500).send({ auth: false, message: 'Authentication Failed, Server Not Responding', error: err })
+        return res.status(500).send({
+            auth: false,
+            message: 'Authentication Failed, Server Not Responding',
+            error: err
+        })
     })
 
     if(userValid.valid == false || userValid.user == null) return res.status(200).json({ auth: false, message: 'Authentication Failed', error: 'Invalid Credentials' });  
@@ -40,7 +44,6 @@ router.post('/', async (req, res) => {
         console.log('User Authentication Failed, Invalid response', userValid);
         return res.status(500).json({ auth: false, message: 'Authentication Failed', error: 'Invalid Response From Server' });
     }
-    console.log(`User ${username} authenticated`);
 
     //Updating User Activity Logs
     const activeUser = await AccInfo.findOneAndUpdate({username: username}, {
@@ -49,10 +52,12 @@ router.post('/', async (req, res) => {
         log_3: userValid.user.log_2
     }, {new: true}).catch((err) => {
         console.log('Error Updating User Logs', err);
-        return res.status(500).json({ auth: false, message: 'Authentication Failed', error: 'Invalid Response From Server' });
+        return res.status(500).json({
+            auth: false,
+            message: 'Authentication Failed',
+            error: 'Invalid Response From Server'
+        });
     });
-
-    // console.log("Logs updated");
 
     const userData = {
         uid: activeUser._id,
@@ -74,7 +79,6 @@ router.post('/', async (req, res) => {
         console.log(`Failed To Create Session Tokens`); 
         return res.status(502).json({ auth: false, message: 'Authentication Failed', error: 'Failed To Create Tokens' });  
     }
-    // console.log('Session Tokens Created');
 
     //Updating Token Logs
     await TokenInfo.findOneAndUpdate({uid: activeUser._id.toString()}, {token : refreshToken}, {new: true}).then(async (resp) => {
@@ -84,7 +88,7 @@ router.post('/', async (req, res) => {
                 console.log('Failed To Add Tokens To Database. Error:', err);
                 res.status(500).send({ auth: false, message: 'Authentication Failed', error: 'Failed To Add Tokens' });   
             });
-        } else console.log('User Token Logs Updated');
+        }
     }).catch((err) => {
         console.log('Failed To Add Tokens To Database. Error:', err);
         res.status(500).send({ auth: false, message: 'Authentication Failed', error: 'Failed To Update Tokens' });   
@@ -95,12 +99,14 @@ router.post('/', async (req, res) => {
     userData.aTr = accessToken;
     userData.aTr_exp = aTr_Exp_Min;
 
+
     console.log(`User ${username} Logged In`);
     return res.status(200).json({
         auth: true,
         message: 'User Logged In',
         user: userData
     });  
+    
 });
 
 export default router

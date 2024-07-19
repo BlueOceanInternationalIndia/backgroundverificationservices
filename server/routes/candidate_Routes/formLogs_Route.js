@@ -1,5 +1,6 @@
 import express from 'express'
 import { Log } from '../../models/log_Model.js'
+import aTr_Validate from '../../middlewares/tokenVerification.js';
 
 const router = express.Router();
 
@@ -41,23 +42,24 @@ router.post('/', async (req, res) => {
         return res.status(500).send({ message: 'Failed To Create Candidate Logs, Try Again' });
     }
 
-    // console.log(`New Log Created For ${entry.username}`);
+    console.log(`New Log Created For ${entry.username}`);
     return res.status(201).send({ message: `New Log Entry Created`, data: entry });
 });
 
-router.get('/:uid', async (req, res) => {
+router.post('/:uid',aTr_Validate, async (req, res) => {
     const {uid} = req.params;
+
     const log = await Log.findOne({uid: uid}).catch((err) => {
         console.log('Data Server Connection Failed. Error:', err);
-        return res.status(500).json({ message: 'Server Connection Failed', error: err });
+        return res.status(500).json({ valid: false, message: 'Server Connection Failed', error: err });
     });
 
     if(log == null || log == '') {
         console.log(`No Logs Found For User ${uid}`);
-        return res.status(400).json({ message: 'Invalid Request' });
+        return res.status(400).json({valid: false, message: 'Invalid Request' });
     }
-    // console.log(`Log for User ${uid} sent`);
-    return res.status(200).json({ message: 'Log Sent', log: log });
+    console.log(`Log for User ${uid} sent`);
+    return res.status(200).json({valid : true, message: 'Log Sent', log: log });
 });
 
 export default router

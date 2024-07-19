@@ -33,11 +33,18 @@ router.post('/', rTa_Validate, async (req, res) => {
             log2: req.user.log_2,
             log3: req.user.log_3,
         }
-        console.log(`Valid User ${req.user.username}`);
-        return res.status(200).send({ valid: true, message: 'User Verified, Valid Session', user: userData })
+        return res.status(200).send({
+            valid: true,
+            message: 'User Verified, Valid Session',
+            user: userData
+        })
     }).catch((err) => {
         console.log('Database Connection Error', err);
-        return res.status(500).send({ valid: false, message: 'Database Connection Error', error: err })
+        return res.status(500).send({
+            valid: false,
+            message: 'Database Connection Error',
+            error: err
+        })
     })
 })
 
