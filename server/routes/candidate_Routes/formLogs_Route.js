@@ -14,7 +14,6 @@ router.post('/', async (req, res) => {
         req.body.form0.submitted == null ||
         req.body.form1.enabled == null ||
         req.body.form1.submitted == null ||
-        req.body.form1.file1 == null ||
         req.body.form2.enabled == null ||
         req.body.form2.submitted == null ||
         req.body.form3.enabled == null ||
@@ -28,7 +27,9 @@ router.post('/', async (req, res) => {
         req.body.form7.enabled == null ||
         req.body.form7.submitted == null ||
         req.body.form8.enabled == null ||
-        req.body.form8.submitted == null
+        req.body.form8.submitted == null ||
+        req.body.form9.enabled == null ||
+        req.body.form9.submitted == null
     ) return res.status(400).send({ message: 'Input fields missing. Invalid request' });
 
     //Creating a new entry
@@ -42,7 +43,6 @@ router.post('/', async (req, res) => {
         return res.status(500).send({ message: 'Failed To Create Candidate Logs, Try Again' });
     }
 
-    console.log(`New Log Created For ${entry.username}`);
     return res.status(201).send({ message: `New Log Entry Created`, data: entry });
 });
 
@@ -55,10 +55,8 @@ router.post('/:uid',aTr_Validate, async (req, res) => {
     });
 
     if(log == null || log == '') {
-        console.log(`No Logs Found For User ${uid}`);
         return res.status(400).json({valid: false, message: 'Invalid Request' });
     }
-    console.log(`Log for User ${uid} sent`);
     return res.status(200).json({valid : true, message: 'Log Sent', log: log });
 });
 

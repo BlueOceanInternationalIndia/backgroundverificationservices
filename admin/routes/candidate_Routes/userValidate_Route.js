@@ -16,10 +16,8 @@ router.post('/', rTa_Validate, async (req, res) => {
     } 
     
     // Finding Token
-    console.log(`Validating User ${req.user.username}`);
     TokenInfo.findOne({uid: req.user.uid}).then((resp) => {
         if(resp == null || resp == 'null' || resp === '' || resp.id != req.user.id || resp.username != req.user.username || resp.token != req.token) {
-            console.log('Invalid Session');
             return res.status(200).send({valid: false, message: 'Invalid Session, login again' })
         } 
 

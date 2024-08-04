@@ -15,7 +15,6 @@ router.post('/', async (req, res) => {
         password = req.body.pass_word__;
     
     //Finding User In Logs
-    console.log(`Authenticating Login for ${username}`);
     const userValid = await AccInfo.findOne({username: username}).then(async (user) => {
         const userAuth = { valid: false, user: null }
 
@@ -41,7 +40,6 @@ router.post('/', async (req, res) => {
     if(userValid.valid == false || userValid.user == null) return res.status(200).json({ auth: false, message: 'Authentication Failed', error: 'Invalid Credentials' });  
     
     if(userValid.valid == null || userValid == null) {
-        console.log('User Authentication Failed, Invalid response', userValid);
         return res.status(500).json({ auth: false, message: 'Authentication Failed', error: 'Invalid Response From Server' });
     }
 
@@ -99,8 +97,6 @@ router.post('/', async (req, res) => {
     userData.aTr = accessToken;
     userData.aTr_exp = aTr_Exp_Min;
 
-
-    console.log(`User ${username} Logged In`);
     return res.status(200).json({
         auth: true,
         message: 'User Logged In',

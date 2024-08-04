@@ -18,7 +18,6 @@ router.post('/access/valid', async (req, res) => {
 
     //Verifying The Token
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, tokenObj) => {
-        console.log(`Validating Token for ${tokenObj.username}`);
         if(err) {
             console.log('Token Verification Failed. Error:', err.message);
             return res.status(200).send({ valid: false, message: 'Token Verification Failed'});
@@ -35,7 +34,6 @@ router.post('/access', rTa_Validate, async (req, res) => {
     // Finding Token
     TokenInfo.findOne({uid: req.user.uid}).then((resp) => {
         if(resp == null || resp == 'null' || resp === '' || resp.id != req.user.id || resp.username != req.user.username || resp.token != req.token) {
-            console.log('Invalid Session');
             return res.status(200).send({valid: false, message: 'Invalid Session, login again' })
         } 
 
@@ -61,10 +59,7 @@ router.post('/access', rTa_Validate, async (req, res) => {
 })
 
 router.delete('/', async (req, res) => {
-    console.log("Clearing Token Logs, All User Will Be Logged Out");
-    
     await TokenInfo.deleteMany({}).then((entry) => {
-        console.log("Token Logs Cleared");
         res.status(200).send({
             message: 'Token Logs Cleared',
             deletedCount: entry.deletedCount

@@ -18,7 +18,7 @@ const Consent_Schema = new Schema(
             unique: true
         },
         consent: {
-            type: Boolean,
+            type: String,
             required: true
         }
     },

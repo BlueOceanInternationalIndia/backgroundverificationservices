@@ -41,7 +41,6 @@ router.post('/', async (req, res) => {
         return res.status(500).send({ message: 'Failed To Create Candidate Logs, Try Again' });
     }
 
-    console.log(`New Log Created For ${entry.username}`);
     return res.status(201).send({ message: `New Log Entry Created`, data: entry });
 });
 

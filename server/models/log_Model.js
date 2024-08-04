@@ -21,100 +21,16 @@ const Log_Schema = new Schema(
             required: true,
             unique: true
         },
-        form0: {
-            enabled: {
-                type: Boolean,
-                required: true
-            },
-            submitted: {
-                type: Boolean,
-                required: true
-            }
-        },
-        form1: {
-            enabled: {
-                type: Boolean,
-                required: true
-            },
-            submitted: {
-                type: Boolean,
-                required: true
-            },
-            file1: {
-                type: Boolean,
-                required: true
-            }
-        },
-        form2: {
-            enabled: {
-                type: Boolean,
-                required: true
-            },
-            submitted: {
-                type: Boolean,
-                required: true
-            }
-        },
-        form3: {
-            enabled: {
-                type: Boolean,
-                required: true
-            },
-            submitted: {
-                type: Boolean,
-                required: true
-            }
-        },
-        form4: {
-            enabled: {
-                type: Boolean,
-                required: true
-            },
-            submitted: {
-                type: Boolean,
-                required: true
-            }
-        },
-        form5: {
-            enabled: {
-                type: Boolean,
-                required: true
-            },
-            submitted: {
-                type: Boolean,
-                required: true
-            }
-        },
-        form6: {
-            enabled: {
-                type: Boolean,
-                required: true
-            },
-            submitted: {
-                type: Boolean,
-                required: true
-            }
-        },
-        form7: {
-            enabled: {
-                type: Boolean,
-                required: true
-            },
-            submitted: {
-                type: Boolean,
-                required: true
-            }
-        },
-        form8: {
-            enabled: {
-                type: Boolean,
-                required: true
-            },
-            submitted: {
-                type: Boolean,
-                required: true
-            }
-        }
+        form0: { enabled: { type: Boolean, required: true }, submitted: { type: Boolean, required: true } },
+        form1: { enabled: { type: Boolean, required: true }, submitted: { type: Boolean, required: true } },
+        form2: { enabled: { type: Boolean, required: true }, submitted: { type: Boolean, required: true } },
+        form3: { enabled: { type: Boolean, required: true }, submitted: { type: Boolean, required: true } },
+        form4: { enabled: { type: Boolean, required: true }, submitted: { type: Boolean, required: true } },
+        form5: { enabled: { type: Boolean, required: true }, submitted: { type: Boolean, required: true } },
+        form6: { enabled: { type: Boolean, required: true }, submitted: { type: Boolean, required: true } },
+        form7: { enabled: { type: Boolean, required: true }, submitted: { type: Boolean, required: true } },
+        form8: { enabled: { type: Boolean, required: true }, submitted: { type: Boolean, required: true } },
+        form9: { enabled: { type: Boolean, required: true }, submitted: { type: Boolean, required: true } }
     },
     //For saving date and time of creation and last update
     {
