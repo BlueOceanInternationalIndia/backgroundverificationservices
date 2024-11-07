@@ -1,3 +1,4 @@
+export const Debugging_ON = false;
 //Origins for CORS policy
 export const allowedOrigins = [
     process.env.PUBLIC_SERVER_URI

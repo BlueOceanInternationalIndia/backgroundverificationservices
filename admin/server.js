@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from "express";
 import CORS from 'cors';
 import connectDB from './config/database.js';
+import cookieParser from 'cookie-parser'
 import { allowedOrigins } from './config/config.js';
 import routes from './routes/routes.js'
 
@@ -20,12 +21,16 @@ app.use(express.json())
 app.use(CORS({ 
         origin: allowedOrigins, 
         methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-        allowedHeaders: ['Content-Type']
+        allowedHeaders: ['Content-Type'],
+        credentials: true
     })
 )
 
+//To get IP of incoming request even is proxy used
+app.set('trust proxy', true);
+
 //Cookies
-// app.use(cookieParser());
+app.use(cookieParser());
 
 //Routes
 app.use('/', routes)
